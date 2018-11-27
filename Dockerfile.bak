@@ -1,0 +1,19 @@
+# Set the base image to node
+FROM node:8
+
+# File Author / Maintainer
+MAINTAINER Manuel Dupont
+
+# Expose server port
+EXPOSE 3000
+# Expose client post
+EXPOSE 8080
+
+# Copy application files
+COPY . .
+
+# Install Node.js dependencies
+RUN npm install
+
+# Start node app.
+CMD npm run server

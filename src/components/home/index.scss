@@ -1,0 +1,25 @@
+#home {
+
+  .pagination {
+    align-items: center;
+    justify-content: center;
+
+    .page-item {
+      .page-link {
+        border: none;
+        color: #565656;
+      }
+
+      &.active {
+        .page-link {
+          width: 30px;
+          height: 30px;
+          background: black;
+          color: white;
+          padding: 5px 10px;
+          border-radius: 25px;
+        }
+      }
+    }
+  }
+}

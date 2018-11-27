@@ -1,0 +1,28 @@
+
+@import "../../App";
+@import "../../variables";
+
+#product-detail {
+
+  padding: 20px;
+  background: #efefef;
+  border-radius: 8px;
+  margin: 5px;
+
+  .content {
+    .name {
+      font-size: 13px;
+      color: lighten($myHeader1, 20%);
+    }
+
+    .description {
+      font-size: 12px;
+      color: $myHeader1;
+    }
+
+    .price {
+      text-align: right;
+      font-weight: 600;
+    }
+  }
+}
