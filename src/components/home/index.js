@@ -14,6 +14,7 @@ import ProductDetail from '../product-detail';
 import {connect} from "react-redux";
 import Pagination from 'react-bootstrap/lib/Pagination';
 import {fetchProducts} from "../../actions/products";
+import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 class Home extends Component {
 
@@ -32,14 +33,28 @@ class Home extends Component {
     this.setState({page: page});
   }
 
+  isProductAdded(id) {
+    return this.props.cart.find(product => product.id === id);
+  }
+
   render() {
     return (
       <div id="home">
+        <Jumbotron>
+          <h1>
+            Welcome to LunaTech <span style={{color: 'red', fontWeight: 'bold'}}>E-Shop</span>
+          </h1>
+          <p>
+            <small>LunaTech is proud to introduce you to its brand new E-Shop. Feel free to buy everything you want,
+              it's not for real :)
+            </small>
+          </p>
+        </Jumbotron>
         {this.props.products && this.props.products.length && this.props.products.map(
           (product, index) => {
             return (
               <div key={index} className="content">
-                <ProductDetail product={product}/>
+                <ProductDetail product={product} added={this.isProductAdded.bind(this, product.id)}/>
               </div>
             )
           })

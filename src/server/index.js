@@ -10,8 +10,15 @@
 /***** Imports *****/
 const express = require('express');
 const dotenv = require('dotenv').config();
+const async = require('async');
 const colors = require('colors');
 const {call} = require('./api');
+const cartController = require('./controllers/cart');
+const mongooseconnect = require('./mongooseconnect');
+
+const port = 3000;
+const app = express();
+var router = express.Router();
 
 global.tracer = require('tracer').colorConsole(
   {
@@ -35,47 +42,74 @@ global.tracer = require('tracer').colorConsole(
     }
   });
 
-const port = 3000;
-const app = express();
+async.waterfall([
+  (cb) => mongooseconnect(cb)
+], async (err) => {
+  if (err) {
+    return tracer.error(err);
+  }
 
-app.use(express.urlencoded());
-app.use(express.json());
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+  app.use(express.urlencoded());
+  app.use(express.json());
 
-var router = express.Router();
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 // a middleware function with no mount path. This code is executed for every request to the router
-router.use(function (req, res, next) {
-  tracer.log('[api]', req);
-  next()
+  router.use(function (req, res, next) {
+    tracer.log('[api]', req);
+    next()
+  });
+
+  app.get('/', (req, res) => {
+    // Get params from the request.
+    res.send("Lunatech E-Shop Server 1.0.0");
+  });
+
+  /**
+   * POST Cart.
+   * @BodyParam {Object}
+   * {
+   *    product: <id>
+   * }
+   */
+  app.post('/cart/add', (req, res, next) => {
+    if (req.body) {
+      const {product} = req.body;
+
+      // Add the product to the database.
+      cartController.addProduct(product)
+        .then((response) => {
+          res.send(response);
+        })
+        .catch(next);
+    } else {
+      next({error: 'Bad request format. Missing body with { product: <id> }'})
+    }
+  });
+
+  /**
+   * GET Products.
+   * @QueryParams path: The full path URL to pass to Lunatech API.
+   * @QueryParams query: The query string to match the path to Lunatech API.
+   */
+  app.get('/products', (req, res, next) => {
+    if (req.query) {
+      const query = require('querystring').stringify(req.query);
+
+      call.get(`${req.path}?${query}`)
+        .then((response) => {
+          res.send(response);
+        })
+        .catch(next);
+    } else {
+      res.status(500).send({error: "Missing query string"});
+    }
+  });
+
+  app.listen(port, () => tracer.info(`E-Shop Server listening on port ${port}!`));
 });
-
-app.get('/', (req, res) => {
-  // Get params from the request.
-  res.send("Lunatech E-Shop Server 1.0.0");
-});
-
-/**
- * GET Products.
- * @QueryParams path: The full path URL to pass to Lunatech API.
- * @QueryParams query: The query string to match the path to Lunatech API.
- */
-app.get('/products', (req, res, next) => {
-  if (req.query) {
-    const query = require('querystring').stringify(req.query);
-
-    call.get(`${req.path}?${query}`)
-      .then((response) => {
-        res.send(response);
-      }).catch(next);
-  } else {
-    res.status(500).send({error: "Missing query string"});
-  }
-});
-
-app.listen(port, () => tracer.info(`E-Shop Server listening on port ${port}!`));

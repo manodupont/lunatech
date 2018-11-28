@@ -85,3 +85,13 @@ T
 $src/server/controllers/cart/index.js,b/e/be15595e04c6436ac6d09abe99e2a6dec8f4f30f
 M
 src/server/mongooseconnect.js,8/e/8e58177f2b27c57dc1a6ebcffbb7e21bd6f408ab
+L
+src/server/models/Product.js,0/a/0abad5d27d972b6785ade967c70d4eb1537edc9c
+I
+src/server/models/Cart.js,e/3/e35b7267d0399876026563f271145d995e6e6dfa
+C
+src/actions/cart.js,9/6/96d8be7e1fea7cac776d73acaaa549f38d46ce76
+D
+src/reducers/cart.js,8/e/8e00dcd0809b7d291c58220c0f9c243f54448bcc
+N
+src/reducers/__tests__/cart.js,a/f/afb873afd08a240d5e8e846a0813d0507487b8f6

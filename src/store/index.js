@@ -12,7 +12,9 @@ import {createLogger} from 'redux-logger';
 import {autoRehydrate} from 'redux-persist';
 import * as actionListener from '../actionlistener';
 
+// Our Reducers ...
 import products from "../reducers/products";
+import cart from "../reducers/cart";
 
 export const history = createBrowserHistory({
   basename: '/'
@@ -35,7 +37,8 @@ if (true) {
 
 export default createStore(
   connectRouter(history)(combineReducers({
-    products
+    products,
+    cart
   })),
 
   compose(

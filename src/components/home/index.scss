@@ -1,4 +1,8 @@
+@import "../../App";
+@import "../../variables";
+
 #home {
+  background: $background;
 
   .pagination {
     align-items: center;
@@ -6,6 +10,7 @@
 
     .page-item {
       .page-link {
+        background: none;
         border: none;
         color: #565656;
       }
