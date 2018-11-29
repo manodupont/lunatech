@@ -12,8 +12,11 @@ import PropTypes from 'prop-types';
 import './index.scss';
 import ProductDetail from '../product-detail';
 import {connect} from "react-redux";
-import Pagination from 'react-bootstrap/lib/Pagination';
+import {Nav, Navbar, NavbarBrand, NavbarToggle, NavItem, Pagination, Badge} from 'react-bootstrap';
 import {fetchProducts} from "../../actions/products";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+
 import Jumbotron from 'react-bootstrap/lib/Jumbotron';
 
 class Home extends Component {
@@ -34,7 +37,9 @@ class Home extends Component {
   }
 
   isProductAdded(id) {
-    return this.props.cart.find(product => product.id === id);
+    let found = this.props.cart.filter(product => product.id === id);
+
+    return found.length === 1;
   }
 
   render() {
@@ -50,11 +55,23 @@ class Home extends Component {
             </small>
           </p>
         </Jumbotron>
+        <Navbar>
+          <Nav>
+            <NavItem eventKey={1} href="#/cart">
+              <div className='shopping-cart-label'>Shopping Cart
+                <FontAwesomeIcon icon={faShoppingCart}/>
+                {this.props.cart && this.props.cart.length &&
+                <Badge>{this.props.cart.length}</Badge>
+                }
+              </div>
+            </NavItem>
+          </Nav>
+        </Navbar>
         {this.props.products && this.props.products.length && this.props.products.map(
           (product, index) => {
             return (
               <div key={index} className="content">
-                <ProductDetail product={product} added={this.isProductAdded.bind(this, product.id)}/>
+                <ProductDetail product={product} added={this.isProductAdded(product.id)}/>
               </div>
             )
           })
@@ -66,6 +83,7 @@ class Home extends Component {
           {this.props.products && this.props.products.length && this.props.products.map((product, index) => {
             if (this.state.page - 3 <= index && index < this.state.page + 2) {
               return <Pagination.Item
+                key={index}
                 active={(index + 1) === this.state.page}
                 onClick={this.onHandlePageClick.bind(this, index + 1)}>{index + 1}</Pagination.Item>
             }
@@ -93,12 +111,17 @@ Home.propTypes = {
       id: PropTypes.string.isRequired,
       name: PropTypes.string,
       price: PropTypes.number
+    })),
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired
     }))
 };
 
 function mapStateToProps(state) {
   return {
-    products: state.products
+    products: state.products,
+    cart: state.cart
   }
 }
 

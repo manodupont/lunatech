@@ -4,6 +4,13 @@
 #home {
   background: $background;
 
+  .shopping-cart-label {
+    background: #888484;
+    padding: 5px;
+    border-radius: 6px;
+    color: white;
+  }
+
   .pagination {
     align-items: center;
     justify-content: center;

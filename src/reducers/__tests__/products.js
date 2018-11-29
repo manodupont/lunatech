@@ -3,9 +3,9 @@ import * as types from "../../actions/types";
 
 describe("products reducer", () => {
   it("should return the initial state", () => {
-    expect(reducer(undefined, {})).toEqual({
-      products: []
-    });
+    expect(reducer(undefined, {})).toEqual(
+      []
+    );
   });
 
   it("RECEIVE_PRODUCTS should add the products to the products state", () => {
@@ -44,4 +44,5 @@ describe("products reducer", () => {
       }]
     );
   });
+
 });

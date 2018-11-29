@@ -15,7 +15,8 @@ import Container from 'react-bootstrap/lib/Container';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
-import {addToCart} from "../../actions/cart";
+import cx from 'classnames';
+import {addToCart, removeFromCart} from "../../actions/cart";
 
 class ProductDetail extends Component {
 
@@ -28,12 +29,23 @@ class ProductDetail extends Component {
   /**
    * Click Handle on a product row to add to cart this product.
    *
-   * @param productId {String}: The product ID.
+   * @param productId {String}: The product ID to remove.
    */
   onBtnAddToCart() {
     const {dispatch} = this.props;
 
     dispatch(addToCart(this.props.product));
+  }
+
+  /**
+   * Click Handle on a product row to remove to cart this product.
+   *
+   * @param productId {String}: The product ID to remove.
+   */
+  onBtnRemoveFromCart() {
+    const {dispatch} = this.props;
+
+    dispatch(removeFromCart(this.props.product.id));
   }
 
   render() {
@@ -44,8 +56,8 @@ class ProductDetail extends Component {
     }
 
     return (
-      <div id="product-detail">
-        <Container className="content nomargin" key={this.props.product.id}>
+      <div id="product-detail" className={cx((this.props.added) ? 'added' : '')}>
+        <Container className={cx('content', 'nomargin')} key={this.props.product.id}>
           <Row>
             <Col xs={10}>
               <Row className='name'>
@@ -69,7 +81,11 @@ class ProductDetail extends Component {
             <Col className='btnAddToCart' xs={1}>
               {(() => {
                 if (price) {
-                  return <Button onClick={this.onBtnAddToCart.bind(this, this.props.product.id)}>Add</Button>
+                  if (this.props.added) {
+                    return <Button onClick={this.onBtnRemoveFromCart.bind(this, this.props.product.id)}>Remove</Button>
+                  } else {
+                    return <Button onClick={this.onBtnAddToCart.bind(this, this.props.product.id)}>Buy</Button>
+                  }
                 }
               })()}
             </Col>
