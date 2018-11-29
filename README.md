@@ -1,4 +1,4 @@
-# Lunactech E-Shop Web App #
+# Lunatech E-Shop Web App #
 
 ### Prerequisites ###
 * Node 8.X
