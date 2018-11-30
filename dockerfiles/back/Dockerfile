@@ -4,10 +4,10 @@ FROM node:8
 # File Author / Maintainer
 MAINTAINER Manuel Dupont
 
+ARG MONGODB_HOST
+
 # Expose server port
 EXPOSE 3000
-# Expose client post
-EXPOSE 8080
 
 # Copy application files
 COPY . .
@@ -16,4 +16,4 @@ COPY . .
 RUN npm install
 
 # Start node app.
-CMD npm run server
+CMD ["node", "./src/server/index.js"]
