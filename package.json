@@ -17,7 +17,7 @@
     "start:server": "npm run db && node ./src/server/index.js",
     "docker:clean": "docker stop $(docker ps -aq) && docker rm $(docker ps -aq)",
     "db": "docker run --name my-mongo -d -p 27017:27017 mongo:latest",
-    "start": "npm run db && docker run --name lunatech-cart-app -p 8080:80 -p 3000:3000 lunatech/cart",
+    "start": "docker run --name lunatech-cart-app -p 8080:80 -p 3000:3000 lunatech/cart",
     "server": "nginx && node ./src/server/index.js"
   },
   "dependencies": {

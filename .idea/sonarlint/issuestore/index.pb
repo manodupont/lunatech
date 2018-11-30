@@ -77,8 +77,6 @@ A
 src/server/api.js,4/e/4e50839a0d4d5a4a78dec14a03ecb863387df37f
 C
 src/server/index.js,5/0/50803e303301b7053e11a5e0b165a4ac2e7f31a3
-<
-default.conf,5/7/57218b0f0f71aa8cd682634b399cd9808a0ef69a
 >
 Dockerfile.bak,3/9/3922b8297d07d5213db68570d52adfe5a491f898
 T
@@ -95,3 +93,9 @@ D
 src/reducers/cart.js,8/e/8e00dcd0809b7d291c58220c0f9c243f54448bcc
 N
 src/reducers/__tests__/cart.js,a/f/afb873afd08a240d5e8e846a0813d0507487b8f6
+B
+docker-compose.yml,3/5/35b8c13cf2eb2a194eada000eb310d65aed53b2a
+K
+dockerfiles/back/Dockerfile,f/f/ff8cb58b511e73738c617f059f5b10a578aaa0ab
+L
+dockerfiles/front/Dockerfile,a/b/ab33f15c1e5b997cc7dceb48e97602c976c33bcf

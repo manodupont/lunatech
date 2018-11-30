@@ -1,0 +1,28 @@
+version: "2"
+services:
+  app:
+    container_name: container-app
+    restart: always
+    build:
+      context: .
+      dockerfile: dockerfiles/back/Dockerfile
+    ports:
+    - "3000:3000"
+    environment:
+    - MONGODB_HOST=mongo
+    links:
+    - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    ports:
+    - "27017:27017"
+  front:
+    container_name: container-front
+    build:
+      context: .
+      dockerfile: dockerfiles/front/Dockerfile
+    ports:
+    - "8080:80"
+    links:
+    - app

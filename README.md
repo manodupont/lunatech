@@ -1,7 +1,8 @@
 # Lunatech E-Shop Web App #
 
 ### Prerequisites ###
-* Node 8.X
+* Node 8.X (https://nodejs.org/en/download/)
+* docker-compose (https://docs.docker.com/compose/install/#install-compose)
 
 ### How to ###
 
@@ -21,5 +22,6 @@
 4. Visit http://localhost:8080
 
 ## Start (All-in-one with docker)
-1. `npm run docker`
-2. `npm run start`
+1. `docker-compose build`
+2. `docker-compose up`
+3. Visit http://localhost:8080
